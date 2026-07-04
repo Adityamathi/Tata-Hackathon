@@ -23,19 +23,13 @@ Edge AI powered road hazard detection system that transforms raw road observatio
 
 ## Quick Start
 
-### Backend
-
 ```bash
+# Install dependencies
 pip install -r requirements.txt
-python backend_server.py
-```
+cd prism-ui && npm install && cd ..
 
-### Frontend
-
-```bash
-cd prism-ui
-npm install
-npm run dev
+# Run everything (backend :8000 + frontend :3000)
+python start.py
 ```
 
 Open http://localhost:3000

@@ -1,4 +1,4 @@
-import subprocess, sys, time, os
+import subprocess, sys, time, os, webbrowser
 
 for port in [3000, 8000]:
     subprocess.run(f"for /f \"tokens=5\" %a in ('netstat -ano | find \":{port}\" ^| find \"LISTENING\"') do taskkill /f /pid %a >nul 2>&1",
@@ -15,6 +15,9 @@ os.chdir("prism-ui")
 ui = subprocess.Popen("npx next start -p 3000", shell=True,
                       creationflags=subprocess.CREATE_NEW_CONSOLE)
 os.chdir("..")
+
+time.sleep(4)
+webbrowser.open("http://localhost:3000")
 
 print("\nOpen:  http://localhost:3000")
 print("Demo:  http://localhost:3000/demo")

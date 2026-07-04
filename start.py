@@ -1,6 +1,5 @@
-import subprocess, sys, time, webbrowser, os
+import subprocess, sys, time, os
 
-# Kill existing processes on :3000 and :8000
 for port in [3000, 8000]:
     subprocess.run(f"for /f \"tokens=5\" %a in ('netstat -ano | find \":{port}\" ^| find \"LISTENING\"') do taskkill /f /pid %a >nul 2>&1",
                    shell=True, capture_output=True)
@@ -13,7 +12,7 @@ time.sleep(2)
 
 print("Starting Next.js UI on :3000...")
 os.chdir("prism-ui")
-ui = subprocess.Popen(["npx", "next", "start", "-p", "3000"],
+ui = subprocess.Popen("npx next start -p 3000", shell=True,
                       creationflags=subprocess.CREATE_NEW_CONSOLE)
 os.chdir("..")
 

@@ -1,0 +1,9 @@
+# PRISM — Predictive Road Intelligence System for Mobility
+numpy
+Pillow
+opencv-python
+ultralytics
+fastapi
+uvicorn
+pydantic
+pyttsx3

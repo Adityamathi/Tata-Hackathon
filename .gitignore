@@ -7,4 +7,6 @@ __pycache__/
 node_modules/
 prism-ui/.next/
 prism-ui/node_modules/
+start_prism.bat
+start_prism.ps1
 

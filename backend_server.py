@@ -7,6 +7,7 @@ import io
 import os
 import base64
 import tempfile
+import urllib.request
 from pathlib import Path
 
 import cv2
@@ -56,6 +57,32 @@ engine = SeverityEngine()
 models: dict[str, YOLO] = {}
 if HAS_ULTRALYTICS:
     for name, path in MODEL_PATHS.items():
+        # Check if file is missing or is an LFS pointer
+        is_pointer = False
+        if os.path.exists(path):
+            if os.path.getsize(path) < 1024:
+                try:
+                    with open(path, "r", errors="ignore") as f:
+                        content = f.read(100)
+                        if "git-lfs" in content or "version https://" in content:
+                            is_pointer = True
+                except Exception:
+                    pass
+        else:
+            is_pointer = True
+
+        if is_pointer:
+            print(f"[PRISM] Downloading model {name} (LFS weights)...")
+            url = f"https://github.com/Adityamathi/Tata-Hackathon/raw/main/{path}"
+            os.makedirs(os.path.dirname(path), exist_ok=True)
+            try:
+                req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+                with urllib.request.urlopen(req) as response, open(path, "wb") as out_file:
+                    out_file.write(response.read())
+                print(f"[PRISM] Downloaded {name} successfully.")
+            except Exception as e:
+                print(f"[PRISM] Failed to download {name}: {e}")
+
         if os.path.exists(path):
             models[name] = YOLO(path)
             print(f"[PRISM] Loaded {name} from {path}")

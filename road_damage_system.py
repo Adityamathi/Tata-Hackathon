@@ -263,7 +263,10 @@ class SurfaceAreaEstimator:
         h, w = gray.shape
         xs = []
         for line in lines:
-            x1, y1, x2, y2 = line[0]
+            line_flat = line.flatten()
+            if len(line_flat) != 4:
+                continue
+            x1, y1, x2, y2 = line_flat
             if abs(y2 - y1) < 20:
                 continue  # skip near-horizontal
             # intersect with bottom row

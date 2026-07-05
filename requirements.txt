@@ -7,3 +7,4 @@ fastapi
 uvicorn
 pydantic
 pyttsx3
+python-multipart

@@ -12,7 +12,9 @@ time.sleep(2)
 
 print("Starting Next.js UI on :3000...")
 os.chdir("prism-ui")
-ui = subprocess.Popen("npx next start -p 3000", shell=True,
+env = os.environ.copy()
+env["PATH"] = "C:\\Program Files\\nodejs;" + env.get("PATH", "")
+ui = subprocess.Popen("\"C:\\Program Files\\nodejs\\npx.cmd\" next dev -p 3000", shell=True, env=env,
                       creationflags=subprocess.CREATE_NEW_CONSOLE)
 os.chdir("..")
 
